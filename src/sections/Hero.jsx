@@ -1,12 +1,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
-import AnimatedCounter from "../components/AnimatedCounter";
 import Button from "../components/Button";
 import { words } from "../constants";
-import HeroExperience from "../components/models/hero_models/HeroExperience";
 
+import { useTheme } from "../context/ThemeContext";
 const Hero = () => {
+  const { theme } = useTheme();
   useGSAP(() => {
     gsap.fromTo(
       ".hero-text h1",
@@ -50,9 +50,8 @@ const Hero = () => {
               <h1>that Deliver Results</h1>
             </div>
 
-            <p className="text-white-50 md:text-xl relative z-10 pointer-events-none">
-              Hi, I’m Adrian, a developer based in Croatia with a passion for
-              code.
+            <p className={`${theme === "light" ? "text-shadow-black-50" : "text-white"}text-white-50 md:text-xl relative z-10 pointer-events-none`}>
+            Hi, I’m Nipun, a web developer with a passion for building the future, one line of code at a time
             </p>
 
             <Button
@@ -63,15 +62,23 @@ const Hero = () => {
           </div>
         </header>
 
-        {/* RIGHT: 3D Model or Visual */}
-        <figure>
-          <div className="hero-3d-layout">
-            <HeroExperience />
+        {/* RIGHT: Modern Animated Visual */}
+        <figure className="relative w-full h-full">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <div className="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px]">
+              <img 
+                src="/images/mainphoto.jpg" 
+                alt="Modern Developer" 
+                className="absolute inset-0 w-full h-full object-contain animate-float"
+              />
+              <div className="absolute inset-0 rounded-full border-2 border-white-50 opacity-20 animate-pulse"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-full blur-xl opacity-30 animate-rotate"></div>
+            </div>
           </div>
         </figure>
       </div>
 
-      <AnimatedCounter />
+      
     </section>
   );
 };

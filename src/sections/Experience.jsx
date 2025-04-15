@@ -1,153 +1,118 @@
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-import { expCards } from "../constants";
 import TitleHeader from "../components/TitleHeader";
-import GlowCard from "../components/GlowCard";
+import { useTheme } from "../context/ThemeContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Experience = () => {
+const projects = [
+  {
+    title: "Bookmart",
+    date: "2024",
+    description:
+      "Bookmart is a platform where users can buy and sell old books. It features seamless transaction flows for both buyers and sellers, with a smooth user interface.",
+    techStack: ["MongoDB", "Express", "Node.js", "React"],
+    imagePath: "/images/image.png",
+  },
+  {
+    title: "AI Resume Analyzer",
+    date: "2024",
+    description:
+      "AI Resume Analyzer uses Gemini AI to evaluate resumes. It provides a score, lists missing skills, highlights keywords, and offers improvement suggestions.",
+    techStack: ["Node.js", "Express", "MongoDB", "Gemini AI", "React"],
+    imagePath: "/images/project2.png",
+  },
+  {
+    title: "AI Code Collab",
+    date: "2025",
+    description:
+      "AI Code Collab is a collaborative coding platform. It integrates with Gemini AI, allowing you to chat with collaborators, interact with AI for code generation, and run the code directly in the browser.",
+    techStack: ["React", "Node.js", "Gemini AI", "WebRTC"],
+    imagePath: "/images/project3.png",
+  },
+  {
+    title: "Git Hunter",
+    date: "TBD",
+    description:
+      "Git Hunter is a tool for discovering and exploring open-source repositories based on specific search criteria. It provides an intelligent search mechanism for GitHub projects.",
+    techStack: ["Node.js", "React", "GitHub API"],
+    imagePath: "/images/githunter.png",
+  },
+  {
+    title: "Note Taking App",
+    date: "TBD",
+    description:
+      "A minimalist note-taking app with features like real-time sync, rich text formatting, and cloud storage for notes, making it easy to organize and access them across devices.",
+    techStack: ["React", "Firebase", "Tailwind CSS"],
+    imagePath: "/images/project4.png",
+  },
+];
+
+const ProjectsTimeline = () => {
+  const { theme } = useTheme();
   useGSAP(() => {
-    // Loop through each timeline card and animate them in
-    // as the user scrolls to each card
     gsap.utils.toArray(".timeline-card").forEach((card) => {
-      // Animate the card coming in from the left
-      // and fade in
       gsap.from(card, {
-        // Move the card in from the left
-        xPercent: -100,
-        // Make the card invisible at the start
+        x: -100,
         opacity: 0,
-        // Set the origin of the animation to the left side of the card
-        transformOrigin: "left left",
-        // Animate over 1 second
         duration: 1,
-        // Use a power2 ease-in-out curve
-        ease: "power2.inOut",
-        // Trigger the animation when the card is 80% of the way down the screen
+        ease: "power2.out",
         scrollTrigger: {
-          // The card is the trigger element
           trigger: card,
-          // Trigger the animation when the card is 80% down the screen
           start: "top 80%",
         },
       });
     });
-
-    // Animate the timeline height as the user scrolls
-    // from the top of the timeline to 70% down the screen
-    // The timeline height should scale down from 1 to 0
-    // as the user scrolls up the screen
-    gsap.to(".timeline", {
-      // Set the origin of the animation to the bottom of the timeline
-      transformOrigin: "bottom bottom",
-      // Animate the timeline height over 1 second
-      ease: "power1.inOut",
-      // Trigger the animation when the timeline is at the top of the screen
-      // and end it when the timeline is at 70% down the screen
-      scrollTrigger: {
-        trigger: ".timeline",
-        start: "top center",
-        end: "70% center",
-        // Update the animation as the user scrolls
-        onUpdate: (self) => {
-          // Scale the timeline height as the user scrolls
-          // from 1 to 0 as the user scrolls up the screen
-          gsap.to(".timeline", {
-            scaleY: 1 - self.progress,
-          });
-        },
-      },
-    });
-
-    // Loop through each expText element and animate them in
-    // as the user scrolls to each text element
-    gsap.utils.toArray(".expText").forEach((text) => {
-      // Animate the text opacity from 0 to 1
-      // and move it from the left to its final position
-      // over 1 second with a power2 ease-in-out curve
-      gsap.from(text, {
-        // Set the opacity of the text to 0
-        opacity: 0,
-        // Move the text from the left to its final position
-        // (xPercent: 0 means the text is at its final position)
-        xPercent: 0,
-        // Animate over 1 second
-        duration: 1,
-        // Use a power2 ease-in-out curve
-        ease: "power2.inOut",
-        // Trigger the animation when the text is 60% down the screen
-        scrollTrigger: {
-          // The text is the trigger element
-          trigger: text,
-          // Trigger the animation when the text is 60% down the screen
-          start: "top 60%",
-        },
-      });
-    }, "<"); // position parameter - insert at the start of the animation
   }, []);
 
   return (
-    <section
-      id="experience"
-      className="flex-center md:mt-40 mt-20 section-padding xl:px-0"
-    >
-      <div className="w-full h-full md:px-20 px-5">
-        <TitleHeader
-          title="Professional Work Experience"
-          sub="💼 My Career Overview"
-        />
-        <div className="mt-32 relative">
-          <div className="relative z-50 xl:space-y-32 space-y-10">
-            {expCards.map((card) => (
-              <div key={card.title} className="exp-card-wrapper">
-                <div className="xl:w-2/6">
-                  <GlowCard card={card}>
-                    <div>
-                      <img src={card.imgPath} alt="exp-img" />
-                    </div>
-                  </GlowCard>
-                </div>
-                <div className="xl:w-4/6">
-                  <div className="flex items-start">
-                    <div className="timeline-wrapper">
-                      <div className="timeline" />
-                      <div className="gradient-line w-1 h-full" />
-                    </div>
-                    <div className="expText flex xl:gap-20 md:gap-10 gap-5 relative z-20">
-                      <div className="timeline-logo">
-                        <img src={card.logoPath} alt="logo" />
-                      </div>
-                      <div>
-                        <h1 className="font-semibold text-3xl">{card.title}</h1>
-                        <p className="my-5 text-white-50">
-                          🗓️&nbsp;{card.date}
-                        </p>
-                        <p className="text-[#839CB5] italic">
-                          Responsibilities
-                        </p>
-                        <ul className="list-disc ms-5 mt-5 flex flex-col gap-5 text-white-50">
-                          {card.responsibilities.map(
-                            (responsibility, index) => (
-                              <li key={index} className="text-lg">
-                                {responsibility}
-                              </li>
-                            )
-                          )}
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+    <section id="projects" className="section-padding md:px-20 px-5 mt-20">
+      <TitleHeader title="My Projects" sub="💼 A Timeline of My Work" />
+      <div className="relative mt-20">
+        {/* Timeline Line */}
+        <div className="absolute left-5 top-0 bottom-0 w-1 bg-gradient-to-b from-blue-400 to-purple-500 rounded-full" />
+
+        <div className="space-y-20 relative z-10">
+          {projects.map((project, index) => (
+            <div
+              key={index}
+              className="timeline-card flex items-stretch gap-10 pl-14 relative"
+            >
+              {/* Dot */}
+              <div className="absolute left-4 top-2 w-4 h-4 rounded-full bg-white border-4 border-purple-500 z-20" />
+
+              {/* Left Content */}
+              <div className={`${theme === 'light' ? 'bg-[#abf7b1]' : 'bg-[#1e293b]'} p-6 rounded-2xl shadow-xl w-2/3`}>
+                <h2 className={`text-2xl font-bold ${theme === 'light' ? 'text-gray-800' : 'text-white'}`}>{project.title}</h2>
+                <p className={`text-sm ${theme === 'light' ? 'text-gray-600' : 'text-white-50'} mt-1 mb-3`}>🗓️ {project.date}</p>
+                <p className={`${theme === 'light' ? 'text-gray-600' : 'text-white-50'} mb-4`}>{project.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.techStack.map((tech, i) => (
+                    <span
+                      key={i}
+                      className={`text-xs ${theme === 'light' ? 'bg-white text-blue-800' : 'bg-purple-800 text-white'} px-3 py-1 rounded-full`}
+                    >
+                      {tech}
+                    </span>
+                  ))}
                 </div>
               </div>
-            ))}
-          </div>
+
+              {/* Right Image */}
+              <div className="w-1/3 h-full flex items-center">
+                <img 
+                  src={project.imagePath}
+                  alt={`${project.title} screenshot`}
+                  className="w-full h-full object-cover rounded-xl shadow-xl"
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
   );
 };
 
-export default Experience;
+export default ProjectsTimeline;

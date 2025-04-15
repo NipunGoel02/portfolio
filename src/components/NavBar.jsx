@@ -1,32 +1,26 @@
 import { useState, useEffect } from "react";
-
 import { navLinks } from "../constants";
+import { useTheme } from "../context/ThemeContext";
 
 const NavBar = () => {
-  // track if the user has scrolled down the page
+  const { theme, toggleTheme } = useTheme();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    // create an event listener for when the user scrolls
     const handleScroll = () => {
-      // check if the user has scrolled down at least 10px
-      // if so, set the state to true
       const isScrolled = window.scrollY > 10;
       setScrolled(isScrolled);
     };
 
-    // add the event listener to the window
     window.addEventListener("scroll", handleScroll);
-
-    // cleanup the event listener when the component is unmounted
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <header className={`navbar ${scrolled ? "scrolled" : "not-scrolled"}`}>
+    <header className={`navbar ${scrolled ? "scrolled" : "not-scrolled"} ${theme}`}>
       <div className="inner">
         <a href="#hero" className="logo">
-          Adrian JSM
+          Nipun Goel
         </a>
 
         <nav className="desktop">
@@ -41,6 +35,14 @@ const NavBar = () => {
             ))}
           </ul>
         </nav>
+
+        <button 
+          onClick={toggleTheme}
+          className="theme-toggle px-4 py-2 rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+          aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+        >
+          {theme === 'dark' ? '☀️ Light' : '🌙 Dark'}
+        </button>
 
         <a href="#contact" className="contact-btn group">
           <div className="inner">

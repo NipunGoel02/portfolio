@@ -1,10 +1,11 @@
 import { useRef, useState } from "react";
 import emailjs from "@emailjs/browser";
-
+import { useTheme } from "../context/ThemeContext";
 import TitleHeader from "../components/TitleHeader";
 import ContactExperience from "../components/models/contact/ContactExperience";
 
 const Contact = () => {
+  const theme = useTheme();
   const formRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -47,12 +48,12 @@ const Contact = () => {
           sub="💬 Have questions or ideas? Let’s talk! 🚀"
         />
         <div className="grid-12-cols mt-16">
-          <div className="xl:col-span-5">
-            <div className="flex-center card-border rounded-xl p-10">
+          <div className="xl:col-span-5 ">
+            <div className={`${theme === "light" ? "bg-white-50" : "bg-black-200"}flex-center card-border rounded-xl p-10`}>
               <form
                 ref={formRef}
                 onSubmit={handleSubmit}
-                className="w-full flex flex-col gap-7"
+                className=" w-full flex flex-col gap-7"
               >
                 <div>
                   <label htmlFor="name">Your name</label>

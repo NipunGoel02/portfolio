@@ -2,10 +2,11 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-
+import { useTheme } from "../context/ThemeContext";
 gsap.registerPlugin(ScrollTrigger);
 
 const AppShowcase = () => {
+  const { theme } = useTheme();
   const sectionRef = useRef(null);
   const rydeRef = useRef(null);
   const libraryRef = useRef(null);
@@ -49,16 +50,14 @@ const AppShowcase = () => {
         <div className="showcaselayout">
           <div ref={rydeRef} className="first-project-wrapper">
             <div className="image-wrapper">
-              <img src="/images/project1.png" alt="Ryde App Interface" />
+              <img src="/images/image.png" alt="BookMart App Interface" />
             </div>
             <div className="text-content">
               <h2>
-                On-Demand Rides Made Simple with a Powerful, User-Friendly App
-                called Ryde
+              Bookmart is a platform that connects buyers and sellers of old books, showing only what's available in their local area.
               </h2>
-              <p className="text-white-50 md:text-xl">
-                An app built with React Native, Expo, & TailwindCSS for a fast,
-                user-friendly experience.
+              <p className={`${theme === "light" ? "text-black" : "text-white"} md:text-xl`}>
+              Bookmart is a location-based platform to buy and sell old books, built with Node.js, Express.js, EJS, HTML, CSS, and MongoDB
               </p>
             </div>
           </div>
@@ -68,17 +67,17 @@ const AppShowcase = () => {
               <div className="image-wrapper bg-[#FFEFDB]">
                 <img
                   src="/images/project2.png"
-                  alt="Library Management Platform"
+                  alt="Ai resume analyzer"
                 />
               </div>
-              <h2>The Library Management Platform</h2>
+              <h2>Ai resume analyzer</h2>
             </div>
 
             <div className="project" ref={ycDirectoryRef}>
               <div className="image-wrapper bg-[#FFE7EB]">
-                <img src="/images/project3.png" alt="YC Directory App" />
+                <img src="/images/project3.png" alt="Code collab App" />
               </div>
-              <h2>YC Directory - A Startup Showcase App</h2>
+              <h2>Code Collab - AI collaboratos chat app</h2>
             </div>
           </div>
         </div>

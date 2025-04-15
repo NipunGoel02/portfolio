@@ -1,12 +1,13 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-
+import { useTheme } from "../context/ThemeContext";
 import TitleHeader from "../components/TitleHeader";
 import TechIconCardExperience from "../components/models/tech_logos/TechIconCardExperience";
 import { techStackIcons } from "../constants";
 // import { techStackImgs } from "../constants";
 
 const TechStack = () => {
+  const { theme } = useTheme();
   // Animate the tech cards in the skills section
   useGSAP(() => {
     // This animation is triggered when the user scrolls to the #skills wrapper
@@ -50,7 +51,7 @@ const TechStack = () => {
           {techStackIcons.map((techStackIcon) => (
             <div
               key={techStackIcon.name}
-              className="card-border tech-card overflow-hidden group xl:rounded-full rounded-lg"
+              className={`${ theme === "light" ? "bg-[#abf7b1]" : "bg-[#1e293b]"} card-border  tech-card overflow-hidden group xl:rounded-full rounded-lg`}
             >
               {/* The tech-card-animated-bg div is used to create a background animation when the 
                   component is hovered. */}
@@ -65,7 +66,7 @@ const TechStack = () => {
                     text and make it take up the full width of the component. */}
                 <div className="padding-x w-full">
                   {/* The p tag contains the name of the tech stack icon. */}
-                  <p>{techStackIcon.name}</p>
+                  <p className={`${theme === "light" ? "text-black" : "text-white"}`}>{techStackIcon.name}</p>
                 </div>
               </div>
             </div>
